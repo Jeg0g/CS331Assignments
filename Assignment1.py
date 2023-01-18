@@ -1,7 +1,17 @@
 #1
 def isPalindrome(x: int) -> bool:
-        num=str(x)
-        return num[0:len(num)//2]==num[::-1][0:len(num)//2]
+        if x<0:
+            return False
+        pow=0
+        xtest=x
+        while xtest>0:
+            pow+=1
+            xtest=xtest//10
+        for i in range(pow//2):
+            if x//(10**(pow-(2*i)-1))%10!=x%10:
+                return False
+            x=x//10
+        return True
 #testcases
 print("Problem 1")
 print(f"0: {isPalindrome(0)}")
