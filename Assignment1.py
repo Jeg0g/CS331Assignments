@@ -1,12 +1,15 @@
 #1
+# def isPalindrome(x: int) -> bool:
+#     return str(x)==str(x)[::-1]
 def isPalindrome(x: int) -> bool:
         if x<0:
             return False
         pow=0
         xtest=x
-        while xtest>0:
+        while xtest>=10:
             pow+=1
             xtest=xtest//10
+        pow+=1
         for i in range(pow//2):
             if x//(10**(pow-(2*i)-1))%10!=x%10:
                 return False
@@ -89,7 +92,6 @@ def art(s: str) -> str:
     for j in range(len(tempstr)-1):
         temp3+=tempstr[j]+"."
     temp3+=tempstr[len(tempstr)-1]
-    temp3+=".."*(len(s)-len(s))
     temp2=temp3[1:][::-1]+temp3
     outstr+=temp2
     outstr+=revoutstr
@@ -98,4 +100,4 @@ def art(s: str) -> str:
 print("Problem 5")
 print(f"@: \n{art('@')}")
 print(f"@%: \n{art('@%')}")
-print(f"@%: \n{art('ABC')}")
+print(f"ABC: \n{art('ABC')}")
