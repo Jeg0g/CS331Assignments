@@ -2,19 +2,19 @@
 # def isPalindrome(x: int) -> bool:
 #     return str(x)==str(x)[::-1]
 def isPalindrome(x: int) -> bool:
-        if x<0:
-            return False
-        pow=0
-        xtest=x
-        while xtest>=10:
-            pow+=1
-            xtest=xtest//10
+    if x<0:
+        return False
+    pow=0
+    xtest=x
+    while xtest>=10:
         pow+=1
-        for i in range(pow//2):
-            if x//(10**(pow-(2*i)-1))%10!=x%10:
-                return False
-            x=x//10
-        return True
+        xtest=xtest//10
+    pow+=1
+    for i in range(pow//2):
+        if x//(10**(pow-(2*i)-1))%10!=x%10:
+            return False
+        x=x//10
+    return True
 #testcases
 print("Problem 1")
 print(f"0: {isPalindrome(0)}")
@@ -26,14 +26,12 @@ print()
 
 #2
 def removeDuplicates(nums: list[int]):
-        nodupnums=nums
-        ptr=1
-        for i in range(1,len(nums)):
-            if nums[i]!=nums[i-1]:
-                nodupnums[ptr]=nums[i]
-                ptr+=1
-        nums=nodupnums
-        return (ptr, nums) 
+    ptr=1
+    for i in range(1,len(nums)):
+        if nums[i]!=nums[i-1]:
+            nums[ptr]=nums[i]
+            ptr+=1
+    return (ptr, nums)
 #testcases
 print("Problem 2")
 print(f"[0, 0, 0]: {removeDuplicates([0, 0, 0])}")
@@ -46,9 +44,13 @@ print()
 #3
 def sumOfMultiples(n: int) -> int:
     sum=0
+    count=0
     for i in range(3,n,3):
-        if i%5!=0:
+        if count==4:
+            count=0
+        else:
             sum+=i
+            count+=1
     for i in range(5,n,5):
         sum+=i
     return sum
@@ -74,6 +76,7 @@ print(numberOfWords("""Starting the Fall of 2021, the Academic Resource Center i
 moving to in person tutoring for most subject areas. There are some online
 tutoring sessions available for some subjects."""))
 print(numberOfWords("Academic Calendar\nAcademic Programs- Graduate\nAcademic Programs- Undergraduate"))
+print()
 
 def art(s: str) -> str:
     outstr=""
@@ -101,3 +104,5 @@ print("Problem 5")
 print(f"@: \n{art('@')}")
 print(f"@%: \n{art('@%')}")
 print(f"ABC: \n{art('ABC')}")
+print(f"#####: \n{art('#####')}")
+print(f"abcdefghijklmnop: \n{art('abcdefghijklmnop')}")
