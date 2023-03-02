@@ -79,4 +79,6 @@ class Graph:
 
 def jars(one,two,three,target):
     g=Graph()
-    
+    g.addVertex((0,0,0))
+    for i in range((one+1)*(two+1)*(three+1)):
+        
