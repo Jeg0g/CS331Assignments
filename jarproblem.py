@@ -202,5 +202,9 @@ jarss=[None]*3
 for i in range(3):
     jarss[i]=input(f"Please enter the size of jar {i+1}: ")
 target=input("Please enter target: ")
-print(BFS(jars(int(jarss[0]),int(jarss[1]),int(jarss[2])),(0,0,0),int(target)))
-    
+def solve(one, two, three, target):
+    if target>one and target>two and target>three:
+        return "No Solutions"
+    else:
+        return BFS(jars(one,two,three),(0,0,0),target)
+print(solve(int(jarss[0]),int(jarss[1]),int(jarss[2]),int(target)))
