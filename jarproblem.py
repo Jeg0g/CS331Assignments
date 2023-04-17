@@ -24,6 +24,8 @@ class Queue:
         val=self.head.data
         self.head=self.head.next
         self.length-=1
+        if self.length==0:
+            self.tail=None
         return val
     
     def __len__(self):
@@ -161,7 +163,8 @@ def fill(c1,c2,vol):
     return (c1,c2)
 
 def BFS(g,s,target):
-    targets=set()
+    found=None
+    breakVar=False
     g[s].color=1
     g[s].d=0
     q=Queue()
@@ -174,22 +177,20 @@ def BFS(g,s,target):
                 g[v].d=g[u].d+1
                 g[v].pi=u
                 if v[0]==target or v[1]==target or v[2]==target:
-                    targets.add(v)
+                    found=v
+                    breakVar=True
+                    break
                 q.enqueue(v)
+        if breakVar:
+            break
         g[u].color=2
-    if len(targets)==0:
+    if found==None:
         return "No Solutions"
-    min=999999999999999999999999
-    minV=None
-    for i in targets:
-        if g[i].d<min:
-            minV=i
-            min=g[i].d
-    path=[None]*(g[minV].d+1)
-    i=g[minV].d
-    while minV!=None:
-        path[i]=minV
-        minV=g[minV].pi
+    path=[None]*(g[found].d+1)
+    i=g[found].d
+    while found!=None:
+        path[i]=found
+        found=g[found].pi
         i-=1
     return path
 
