@@ -169,6 +169,7 @@ def BFS(g,s,target):
     g[s].d=0
     q=Queue()
     q.enqueue(s)
+    count=0
     while len(q)>0:
         u=q.dequeue()
         for v in g[u]:
@@ -177,6 +178,7 @@ def BFS(g,s,target):
                 g[v].d=g[u].d+1
                 g[v].pi=u
                 if v[0]==target or v[1]==target or v[2]==target:
+                    print("ran")
                     found=v
                     breakVar=True
                     break
@@ -184,6 +186,9 @@ def BFS(g,s,target):
         if breakVar:
             break
         g[u].color=2
+        count+=1
+    print(g)
+    print(count)
     if found==None:
         return "No Solutions"
     path=[None]*(g[found].d+1)
