@@ -116,12 +116,14 @@ def addAllVerticies(one,two,three,starting,g):
     if starting in g:
         return
     g.addVertex(starting)
+
     addAllVerticies(one,two,three,(one,starting[1],starting[2]),g)
     g.addEdge(starting,(one,starting[1],starting[2]))
     addAllVerticies(one,two,three,(starting[0],two,starting[2]),g)
     g.addEdge(starting,(starting[0],two,starting[2]))
     addAllVerticies(one,two,three,(starting[0],starting[1],three),g)
     g.addEdge(starting,(starting[0],starting[1],three))
+
     addAllVerticies(one,two,three,(0,starting[1],starting[2]),g)
     g.addEdge(starting,(0,starting[1],starting[2]))
     addAllVerticies(one,two,three,(starting[0],0,starting[2]),g)
@@ -154,7 +156,7 @@ def addAllVerticies(one,two,three,starting,g):
 
 def fill(c1,c2,vol):
     if c1+c2<=vol:
-        c2=c1
+        c2+=c1
         c1=0
     else:
         diff=vol-c2
