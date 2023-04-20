@@ -128,8 +128,8 @@ def addAllVerticies(one,two,three,starting,g):
     g.addEdge(starting,(starting[0],0,starting[2]))
     addAllVerticies(one,two,three,(starting[0],starting[1],0),g)
     g.addEdge(starting,(starting[0],starting[1],0))
-    addAllVerticies(one,two,three,(starting[0],starting[1],starting[2]),g)
-    g.addEdge(starting,(starting[0],starting[1],starting[2]))
+    # addAllVerticies(one,two,three,(starting[0],starting[1],starting[2]),g)
+    # g.addEdge(starting,(starting[0],starting[1],starting[2]))
     
     vols=fill(starting[0],starting[1],two)
     addAllVerticies(one,two,three,(vols[0],vols[1],starting[2]),g)
@@ -154,7 +154,7 @@ def addAllVerticies(one,two,three,starting,g):
 
 def fill(c1,c2,vol):
     if c1+c2<=vol:
-        c2=vol
+        c2=c1
         c1=0
     else:
         diff=vol-c2
@@ -178,7 +178,6 @@ def BFS(g,s,target):
                 g[v].d=g[u].d+1
                 g[v].pi=u
                 if v[0]==target or v[1]==target or v[2]==target:
-                    print("ran")
                     found=v
                     breakVar=True
                     break
@@ -187,8 +186,6 @@ def BFS(g,s,target):
             break
         g[u].color=2
         count+=1
-    print(g)
-    print(count)
     if found==None:
         return "No Solutions"
     path=[None]*(g[found].d+1)
