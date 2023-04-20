@@ -141,7 +141,7 @@ class AVLTree:
         # Return the minimum item stored in an AVL Tree.
         def rec_min(n):
             if n.left is None:
-                return n
+                return n.val
             return rec_min(n.left)
         return rec_min(self.root)
 
@@ -149,7 +149,7 @@ class AVLTree:
         # Return the maximum item stored in an AVL Tree.
         def rec_max(n):
             if n.right is None:
-                return n
+                return n.val
             return rec_max(n.right)
         return rec_max(self.root)
 
@@ -196,12 +196,12 @@ class AVLTree:
                 return 0
             return rec_height(n.left)-rec_height(n.right)
         if balance(x)>1 and balance(x.left)>=0:
-            x.right_rotation
+            x.right_rotation()
         if balance(x)>1 and balance(x.left)<0:
             x.left.left_rotation()
             x.right_rotation()
         if balance(x)<-1 and balance(x.left)<=0:
-            x.left_rotation
+            x.left_rotation()
         if balance(x)<-1 and balance(x.left)>0:
             x.right.right_rotation()
             x.left_rotation()
@@ -222,11 +222,12 @@ class AVLTree:
                 x=AVLTree.Node(item)
             elif item<x.val:
                 x.left=rec_insert(x.left)
-            else:
+            elif item>x.val:
                 x.right=rec_insert(x.right)
-            x.height=rec_height(x)
+            x.height=max(rec_height(x.left),rec_height(x.right))+1
             AVLTree.rebalance(x)
             return x
+        
         self.root=rec_insert(self.root)
 
 
@@ -261,8 +262,9 @@ class AVLTree:
                         y=y.left
                     x.val,y.val=y.val,x.val
                     x.right = rec_delete(x.right)
-            x.height=rec_height(x)
-            AVLTree.rebalance(x)
+            if not x is None:
+                x.height=max(rec_height(x.left),rec_height(x.right))+1
+                AVLTree.rebalance(x)
             return x
         assert item in self
         self.root=rec_delete(self.root)
