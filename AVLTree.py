@@ -188,9 +188,9 @@ class AVLTree:
         if get_balance(x)>1 and get_balance(x.left)<0:
             x.left.left_rotation()
             x.right_rotation()
-        if get_balance(x)<-1 and get_balance(x.left)<=0:
+        if get_balance(x)<-1 and get_balance(x.right)<=0:
             x.left_rotation()
-        if get_balance(x)<-1 and get_balance(x.left)>0:
+        if get_balance(x)<-1 and get_balance(x.right)>0:
             x.right.right_rotation()
             x.left_rotation()
 
@@ -246,7 +246,6 @@ class AVLTree:
                 x.height=max(get_height(x.left),get_height(x.right))+1
                 AVLTree.rebalance(x)
             return x
-        assert item in self
         self.root=rec_delete(self.root)
 
 
