@@ -88,13 +88,13 @@ class AVLTree:
 
             self.val, y.val = y.val, self.val
 
-            alpha = self.right
+            alpha = y.left
             beta = y.right
-            gamma = y.left
+            gamma = self.right
 
-            self.right, self.left, y.right, y.left = y, gamma, alpha, beta
-            y.height = 1 + max(get_height(alpha), get_height(beta))
-            self.height = 1 + max(get_height(y), get_height(gamma))
+            self.left, self.right, y.left, y.right= alpha, y, beta, gamma
+            y.height = 1 + max(get_height(beta), get_height(gamma))
+            self.height = 1 + max(get_height(alpha), get_height(y))
 
     # Please implement each of the following methods in class AVLTree following the guide.
     # Here, I've only implemented the construction method, a printing method: pprint
@@ -130,11 +130,7 @@ class AVLTree:
     def height(self):
         # The height of a tree equals to the height of its root.
         # Thus, here we can return the height of the root of a tree.
-        def rec_height(n):
-            if n is None:
-                return -1
-            return max(rec_height(n.left),rec_height(n.right))+1
-        return rec_height(self.root)
+        return get_height(self.root)
         
 
     def tree_minimum(self):
@@ -187,22 +183,14 @@ class AVLTree:
         # Use left_rotations and right_rotations to fix AVL property at Node x.
         # Please follow the rebalance algorithm in Lecture 11 while implementing.
         # Do not return anything in this method.
-        def rec_height(n):
-            if n is None:
-                return -1
-            return max(rec_height(n.left),rec_height(n.right))+1
-        def balance(n):
-            if n is None:
-                return 0
-            return rec_height(n.left)-rec_height(n.right)
-        if balance(x)>1 and balance(x.left)>=0:
+        if get_balance(x)>1 and get_balance(x.left)>=0:
             x.right_rotation()
-        if balance(x)>1 and balance(x.left)<0:
+        if get_balance(x)>1 and get_balance(x.left)<0:
             x.left.left_rotation()
             x.right_rotation()
-        if balance(x)<-1 and balance(x.left)<=0:
+        if get_balance(x)<-1 and get_balance(x.left)<=0:
             x.left_rotation()
-        if balance(x)<-1 and balance(x.left)>0:
+        if get_balance(x)<-1 and get_balance(x.left)>0:
             x.right.right_rotation()
             x.left_rotation()
 
@@ -213,10 +201,6 @@ class AVLTree:
         # Insert a new item into an AVLTree, and maintain the AVL property at the same time.
         # Please follow the AVL_tree_insertion algorithm and the partial code in Lecture 11 while implementing.
         # Do not return anything in this method.
-        def rec_height(n):
-            if n is None:
-                return -1
-            return max(rec_height(n.left),rec_height(n.right))+1
         def rec_insert(x):
             if x is None:
                 x=AVLTree.Node(item)
@@ -224,7 +208,7 @@ class AVLTree:
                 x.left=rec_insert(x.left)
             elif item>x.val:
                 x.right=rec_insert(x.right)
-            x.height=max(rec_height(x.left),rec_height(x.right))+1
+            x.height=max(get_height(x.left),get_height(x.right))+1
             AVLTree.rebalance(x)
             return x
         
@@ -240,10 +224,6 @@ class AVLTree:
         # in the case that the node has two children. (It will give different tree after deletion but the binary
         # search property will also be maintained.)
         # Do not return anything in this method.
-        def rec_height(n):
-            if n is None:
-                return -1
-            return max(rec_height(n.left),rec_height(n.right))+1
         def rec_delete(x):
             if item<x.val:
                 x.left=rec_delete(x.left)
@@ -263,7 +243,7 @@ class AVLTree:
                     x.val,y.val=y.val,x.val
                     x.right = rec_delete(x.right)
             if not x is None:
-                x.height=max(rec_height(x.left),rec_height(x.right))+1
+                x.height=max(get_height(x.left),get_height(x.right))+1
                 AVLTree.rebalance(x)
             return x
         assert item in self
